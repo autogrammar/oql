@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "oql"
-version = "0.1.1"
+version = "0.1.2"
 description = "OQL CLI — command line interface for OqlOS"
 readme = "README.md"
 requires-python = ">=3.10"

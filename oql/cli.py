@@ -66,6 +66,23 @@ def run(file: str, step: bool, mode: str, firmware_url: str, report: str | None,
     sys.exit(0 if result.ok else 1)
 
 
+@main.command(name="format")
+@click.argument("file", type=click.Path(exists=True))
+@click.option("-w", "--write", is_flag=True, help="Rewrite the file in canonical OQL syntax")
+def format_cmd(file: str, write: bool) -> None:
+    """Print or write canonical OQL syntax for a scenario file."""
+    from oqlos.tools.cql_cli.formatting import canonicalize_oql_text
+
+    path = Path(file)
+    source = path.read_text(encoding="utf-8")
+    formatted = canonicalize_oql_text(source)
+
+    if write:
+        path.write_text(formatted, encoding="utf-8")
+    else:
+        click.echo(formatted, nl=not formatted.endswith("\n"))
+
+
 def _generate_report(result, fmt: str) -> str:
     """Generate report content from a ScriptResult."""
     if fmt == "json":

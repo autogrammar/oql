@@ -1,5 +1,5 @@
 # goal.yaml - Goal configuration file
-# Generated: 2026-04-15 18:54:34
+# Generated: 2026-05-29 09:20:21
 # Documentation: https://github.com/wronai/goal#configuration
 #
 # This file configures Goal's behavior for:
@@ -20,6 +20,7 @@ project:
 versioning:
   strategy: semver
   files:
+  - VERSION
   - pyproject.toml:version
   - oql/__init__.py:__version__
   bump_rules:

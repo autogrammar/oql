@@ -46,3 +46,39 @@ class TestCli:
             "firmware_url": "http://localhost:8202",
             "mode": "execute",
         }
+
+    def test_format_subcommand_prints_canonical_set_syntax(self):
+        runner = CliRunner()
+        with runner.isolated_filesystem():
+            with open("legacy.oql", "w", encoding="utf-8") as handle:
+                handle.write(
+                    "VERSION: 4\n"
+                    "GOAL:\n"
+                    "  SET [motor 2] = [reciprocating motion]\n"
+                    "  SET [motor 2] = [limit 1000 steps/s]\n"
+                    "  SET tryb = TEST\n"
+                    "  SET NAME [Legacy goal]\n"
+                )
+
+            result = runner.invoke(main, ["format", "legacy.oql"])
+
+        assert result.exit_code == 0
+        assert "SET 'motor 2' 'reciprocating motion'" in result.output
+        assert "SET 'motor 2' 'limit 1000 steps/s'" in result.output
+        assert "SET 'tryb' 'TEST'" in result.output
+        assert "SET NAME 'Legacy goal'" in result.output
+        assert "SET [motor 2]" not in result.output
+
+    def test_format_subcommand_write_updates_file(self):
+        runner = CliRunner()
+        with runner.isolated_filesystem():
+            with open("legacy.oql", "w", encoding="utf-8") as handle:
+                handle.write("VERSION: 4\nGOAL:\n  SET [zawor 3] = [ON]\n")
+
+            result = runner.invoke(main, ["format", "--write", "legacy.oql"])
+
+            with open("legacy.oql", encoding="utf-8") as handle:
+                formatted = handle.read()
+
+        assert result.exit_code == 0
+        assert "SET 'zawor 3' 'ON'" in formatted
