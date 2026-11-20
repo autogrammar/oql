@@ -10,12 +10,12 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 dependencies = [
-    "click>=8.0",
-    "rich>=13.0",
-    "httpx>=0.27",
-    "oqlos>=0.1.0",
-    "goal>=2.1.0",
-    "costs>=0.1.20",
+    "click>=8.5.1",
+    "rich>=13.9.4",
+    "httpx>=0.27.2",
+    "oqlos>=0.1.27",
+    "goal>=2.1.284",
+    "costs>=0.1.53",
     "testql>=1.2.63",
 ]
 
@@ -24,8 +24,8 @@ oqlctl = "oql.cli:main"
 
 [project.optional-dependencies]
 dev = ["pytest",
-    "goal>=2.1.0",
-    "costs>=0.1.20",
+    "goal>=2.1.284",
+    "costs>=0.1.53",
 ]
 
 [tool.setuptools.packages.find]
